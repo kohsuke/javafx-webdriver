@@ -14,6 +14,10 @@ public class JavaFxExecutorService extends AbstractExecutorService {
             
     JavaFxExecutorService() throws InterruptedException {
         synchronized (getClass()) {
+
+            if (javaFxRunning)
+                return;
+
             Thread t = new Thread() {
                 @Override
                 public void run() {
@@ -29,7 +33,6 @@ public class JavaFxExecutorService extends AbstractExecutorService {
     }
 
     public void shutdown() {
-        Platform.exit();
     }
 
     public List<Runnable> shutdownNow() {
